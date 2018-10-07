@@ -1,27 +1,42 @@
 'use strict';
 var mongoose = require('mongoose');
 
-var Account = mongoose.model('Account');
-
-
+var Account = require('./../Models/Account')
 
 exports.processRequest = function (req, res) {
-  if (req.body.result.action == "account") {
-    getAccount(req, res)
+  
+  console.log("In function processRequest")
+  console.log("%s", JSON.stringify(req.body))
+  // console.log("%s", JSON.stringify(req.body["intent]"))
+  if (req.body.intent == "street") {
+    console.log("%s", req.body.intent)
+    console.log("%s",   req.body.queryResult.queryText);
+    getStreet(req, res);
   }
 };
 
-function getAccount(req, res) {
-  let acctToSearch = req.body.result && req.body.result.parameters && req.body.result.parameters.team ? req.body.result.parameters.team : 'Unknown';
-  Account.findOne({ accountNumber: acctToSearch }, function (err, teamExists) {
+function getStreet(req, res) {
+  let acctToSearch = req.body.queryResult && req.body.queryResult.parameters && req.body.queryResult.parameters.lastName ? req.body.queryResult.parameters.lastName : 'Unknown';
+  console.log(acctToSearch);
+  // var test = Account.findOne({ lastName: "Mann" });
+  // console.log("Test: " + test.street);
+
+  Account.findOne({ lastName: acctToSearch }, function (err, acctExists) {
     if (err) {
+
       return res.json({
         speech: 'Something went wrong!',
         displayText: 'Something went wrong!',
         source: 'account'
       });
+    }else{
+      console.log("Found person at " + JSON.stringify(acctExists));
     }
+    console.log(acctExists)
+
     if (acctExists) {
+      console.log("Found person at " + acctExists.lastName);
+
       return res.json({
         speech: acctExists.street,
         displayText: acctExists.street,

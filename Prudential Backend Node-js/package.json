@@ -21,7 +21,7 @@
   "homepage": "https://github.com/aroy99/PrudentialBackend#readme",
   "dependencies": {
     "express": "^4.16.3",
-    "mango": "0.0.4"
+    "mongoose": "^5.3.1"
   },
   "devDependencies": {}
 }

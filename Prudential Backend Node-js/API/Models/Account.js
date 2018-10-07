@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var Account = new Schema({
+
+var AccountSchema = new mongoose.Schema({
   street: {
     type: String,
     required: false
@@ -46,8 +46,10 @@ var Account = new Schema({
     required: false
   },
   accountBalance: {
-    type: Number,
+    type: String,
     required: false
   }
 });
-module.exports = mongoose.model('Account', Account);
+// mongoose.model('fakeInfo', Account);
+var Account = mongoose.model('account', AccountSchema);
+module.exports = Account;
